@@ -1,0 +1,50 @@
+.imgtemplate{
+    width: 200px;
+    display: block;;
+}
+
+#wrap {
+    width: 220px;
+    height: 220px;
+    padding: 0;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    overflow: hidden;
+}
+
+#frame {
+    width: 750px;
+    height: 1500px;
+    position: relative;
+    left: 0px;
+    top: 0px;
+}
+
+#frame {
+    -ms-zoom: 0.28;
+    -moz-transform: scale(0.28);
+    -moz-transform-origin: 0px 0;
+    -o-transform: scale(0.28);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.28);
+    -webkit-transform-origin: 0 0;
+}
+
+.ampliarvista{
+    color: #000;
+    float: left;
+    z-index: 50;
+    position: absolute;
+    width: 220px;
+    height: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(79, 92, 115, 0.8);
+    bottom: 0;
+    font-family: Arial;
+    font-size: 13px;
+    color: #fff;
+}
