@@ -1,6 +1,7 @@
 <div class="content-header row">
     <div class="content-header-left col-md-6 col-12 mb-1">
-      <h3 class="content-header-title">Gestión</h3>
+
+      <h3 class="content-header-title">{{subcate}}</h3>
     </div>
     <div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-12">
       <div class="breadcrumb-wrapper col-12">
@@ -11,11 +12,12 @@
           <li class="breadcrumb-item">
               <a>Establecidas Esíka</a>
             </li>
-          <li class="breadcrumb-item active">Gestión</li>
+          <li class="breadcrumb-item active">{{subcate}}</li>
         </ol>
       </div>
     </div>
   </div>
+ 
   <div class="content-detached">
     <div class="content-body">
       <section class="row" *ngIf= "templates?.length > 0; else noItems">
@@ -24,12 +26,11 @@
           <div class="card">
             
               <div class="card-body">
-                  <p class="card-text"><small> {{template.nombre}}</small><br>
+                  <p class="card-text"><small>{{template.nombre}}</small><br>
                   <small>Semana: {{template.semana}}</small></p>
                   <!-- Card sample -->
                   <div class="text-center"> 
-                    <img class="card-img-top mb-1 img-fluid" [src]="'./assets/template/' + template.nombre + '.jpg'" alt="Card image cap">
-                     
+                    <img class="card-img-top mb-1 img-fluid" [src]="'./assets/template/' + template.nombre + '.jpg'" alt="">
                   </div>
                   <!-- <h4 class="card-title">L0070_EM_EK_ESK_LabialRadiance(Todos)_ES.html</h4> -->
                
@@ -61,7 +62,7 @@
                         </div>
                       </div>
                   </div>
-                  <!-- /form sample -->
+
                 </div>
           </div>
         </div>

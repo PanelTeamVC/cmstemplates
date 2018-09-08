@@ -1,9 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 
-export const TWO_COLUMN_ROUTES: Routes = [
+export const HOME_ROUTES: Routes = [
     {
-        path: '2-columns-layout',
-        loadChildren: './pages/2-columns-layout-page/2-columns-layout-page.module#TwoColumnsLayoutPagesModule'
+        path: 'home',
+        loadChildren: './pages/home-layout-page/home-layout-page.module#TwoColumnsLayoutPagesModule'
     },
     {
         path: 'changelog',

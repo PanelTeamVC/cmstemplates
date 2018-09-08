@@ -26,20 +26,48 @@ export class DatawebService {
     /*carga dato json*/
     this.carga_data();
 
-    
     //this.templates = this.afs.collection('templates').valueChanges();
 
   }
 
-  getFelicitaciones(){
+
+  getEstablecidas(){
+        /**MOdelo 1, Jalal todos los campos */
+    // this.templatesCollection = this.afs.collection<Template>('templates');
+    // this.templates = this.templatesCollection.valueChanges();
+
+
+    /**MOdelo Jala con una condicional */
+ 
+    // this.templatesCollection = this.afs.collection<Template>('templates', ref => {
+    //   return ref
+    //             .where('categoria', '==', 'Establecidas-Esika')      
+    // });
+    // this.templates = this.templatesCollection.valueChanges();
+  
+    return this,this.templates
+
+
+  }
+
+
+
+  getEstablecidasEsika( sc: string){
     /**Carga datos de Direstore con consultas */
     this.templatesCollection = this.afs.collection<Template>('templates', ref => {
       return ref
-                .where('tipo', '==', 'felicitaciones')      
+                .where('tipo', '==', sc)
+                .where('categoria', '==' , 'Establecidas-Esika')   
     });
     this.templates = this.templatesCollection.valueChanges();
     
+
+
+
     return this,this.templates
+
+
+    //this.templates = this.afs.collection('templates').valueChanges();
   }
 
   getGestion(){
@@ -77,10 +105,6 @@ export class DatawebService {
 
 
 
-
-
-
-
   public carga_data(){
     this.http.get("./assets/data/data.web.json")
     .subscribe( data => {
@@ -100,15 +124,8 @@ export class DatawebService {
   //   }) as AngularFirestoreCollection<Template>;
    
   //   return this.templates;
-   
   // }
-
 }
-
-
-
-
-
 
 // export class AppComponent {
 //   itemCollection: AngularFirestoreCollection<Item>;

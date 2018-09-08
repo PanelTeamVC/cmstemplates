@@ -21,15 +21,13 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/assets/app/vendors/css/ui/prism.min.css",
               "src/assets/app/css/vendors.css",
               "src/assets/scss/app.scss",
               "src/assets/scss/core/menu/menu-types/vertical-menu.scss",
               "src/assets/scss/style.scss"
             ],
             "scripts": [
-              "src/assets/app/vendors/js/vendors.min.js",
-              "src/assets/app/vendors/js/ui/prism.min.js"
+              "src/assets/app/vendors/js/vendors.min.js"
             ]
           },
           "configurations": {
@@ -77,11 +75,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "src/assets/app/vendors/js/vendors.min.js",
-              "src/assets/app/vendors/js/ui/prism.min.js"
+              "src/assets/app/vendors/js/vendors.min.js"
             ],
             "styles": [
-              "src/assets/app/vendors/css/ui/prism.min.css",
               "src/assets/app/css/vendors.css",
               "src/assets/scss/app.scss",
               "src/assets/scss/core/menu/menu-types/vertical-menu.scss",

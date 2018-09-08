@@ -21,9 +21,12 @@ import { FixedNavbarLayoutComponent } from './layouts/fixed-navbar-layout/fixed-
 import { DetachedRightSidebarLayoutComponent } from './layouts/detached-right-sidebar-layout/detached-right-sidebar-layout.component';
 import { DetachedStickyRightSidebarLayoutComponent } from './layouts/detached-sticky-right-sidebar-layout/detached-sticky-right-sidebar-layout.component';
 import { DetachedStickyLeftSidebarLayoutComponent } from './layouts/detached-sticky-left-sidebar-layout/detached-sticky-left-sidebar-layout.component';
-import { DetachedLeftSidebarLayoutComponent } from './layouts/detached-left-sidebar-layout/detached-left-sidebar-layout.component';
 import { OneColumnLayoutComponent } from './layouts/1-column-layout/1-column-layout.component';
-import { TwoColumnsLayoutComponent } from './layouts/2-columns-layout/2-columns-layout.component';
+import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
+
+/**Pages */
+import { establecidasesikaLayoutComponent } from './layouts/establecidasesika-layout/establecidasesika-layout.component';
+import { nuevasesikaLayoutComponent } from './layouts/nuevasesika-layout/nuevasesika-layout.component';
 
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth-guard.service';
@@ -50,8 +53,9 @@ import { AngularFireAuthModule }  from 'angularfire2/auth';
     declarations: [
         AppComponent,
         OneColumnLayoutComponent,
-        TwoColumnsLayoutComponent,
-        DetachedLeftSidebarLayoutComponent,
+        HomeLayoutComponent,
+        establecidasesikaLayoutComponent,
+        nuevasesikaLayoutComponent,
         DetachedStickyLeftSidebarLayoutComponent,
         DetachedStickyRightSidebarLayoutComponent,
         DetachedRightSidebarLayoutComponent,
@@ -65,7 +69,6 @@ import { AngularFireAuthModule }  from 'angularfire2/auth';
         LightLayoutComponent,
         DarkLayoutComponent,
         SemiDarkLayoutComponent
-       
     ],
     imports: [
         BrowserAnimationsModule,

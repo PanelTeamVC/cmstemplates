@@ -35,4 +35,5 @@ export class DarkLayoutComponent implements OnDestroy, OnInit  {
     this.renderer.addClass(elm, 'menu-light');
     this.renderer.removeClass(elm, 'menu-dark');
   }
+  
 }

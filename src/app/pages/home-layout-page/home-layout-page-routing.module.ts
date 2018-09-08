@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { TwoColumnsLayoutPageComponent } from './2-columns-layout-page.component';
+import { HomeLayoutPageComponent } from './home-layout-page.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: TwoColumnsLayoutPageComponent,
+    component: HomeLayoutPageComponent,
     data: {
-      title: 'Two Columns Layout Page'
+      title: 'home'
     },
   }
 ];

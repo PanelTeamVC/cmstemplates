@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { FormsModule } from '@angular/forms';
 
-import { TwoColumnsLayoutPagesRoutingModule } from "./2-columns-layout-page-routing.module";
-import { TwoColumnsLayoutPageComponent } from './2-columns-layout-page.component';
+import { TwoColumnsLayoutPagesRoutingModule } from "./home-layout-page-routing.module";
+import { HomeLayoutPageComponent } from './home-layout-page.component';
 
 
 
@@ -14,7 +14,7 @@ import { TwoColumnsLayoutPageComponent } from './2-columns-layout-page.component
         FormsModule        
     ],
     declarations: [
-        TwoColumnsLayoutPageComponent
+        HomeLayoutPageComponent
     ]
 })
 export class TwoColumnsLayoutPagesModule { }

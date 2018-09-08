@@ -14,16 +14,18 @@ import { FixedNavbarLayoutComponent } from './layouts/fixed-navbar-layout/fixed-
 import { DetachedRightSidebarLayoutComponent } from './layouts/detached-right-sidebar-layout/detached-right-sidebar-layout.component';
 import { DetachedStickyRightSidebarLayoutComponent } from './layouts/detached-sticky-right-sidebar-layout/detached-sticky-right-sidebar-layout.component';
 import { DetachedStickyLeftSidebarLayoutComponent } from './layouts/detached-sticky-left-sidebar-layout/detached-sticky-left-sidebar-layout.component';
-import { DetachedLeftSidebarLayoutComponent } from './layouts/detached-left-sidebar-layout/detached-left-sidebar-layout.component';
 import { OneColumnLayoutComponent } from './layouts/1-column-layout/1-column-layout.component';
-import { TwoColumnsLayoutComponent } from './layouts/2-columns-layout/2-columns-layout.component';
+import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
+import { establecidasesikaLayoutComponent } from './layouts/establecidasesika-layout/establecidasesika-layout.component';
+import { nuevasesikaLayoutComponent } from './layouts/nuevasesika-layout/nuevasesika-layout.component';
 
 
 import { ONE_COLUMN_ROUTES } from "./shared/routes/1-column-layout.routes";
-import { TWO_COLUMN_ROUTES } from "./shared/routes/2-columns-layout.routes";
+import { HOME_ROUTES } from "./shared/routes/home-layout.routes";
 import { BOXED_ROUTES } from "./shared/routes/boxed-layout.routes";
 import { DARK_ROUTES } from "./shared/routes/dark-layout.routes";
-import { DETACHED_LEFT_SIDEBAR_ROUTES } from "./shared/routes/detached-left-sidebar-layout.routes";
+import { ESTABLECIDASESIKA_ROUTES } from "./shared/routes/establecidasesika-layout.routes";
+import { NUEVASESIKA_ROUTES } from "./shared/routes/nuevasesika-layout.routes";
 import { DETACHED_RIGHT_SIDEBAR_ROUTES } from "./shared/routes/detached-right-sidebar-layout.routes";
 import { DETACHED_STICKY_LEFT_SIDEBAR_ROUTES } from "./shared/routes/detached-sticky-left-sidebar-layout.routes";
 import { DETACHED_STICKY_RIGHT_SIDEBAR_ROUTES } from "./shared/routes/detached-sticky-right-sidebar-layout.routes";
@@ -41,14 +43,15 @@ import { AuthGuard } from './shared/auth/auth-guard.service';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '2-columns-layout',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
+  { path: '', component: HomeLayoutComponent, data: { title: '' }, children: HOME_ROUTES, canActivate: [AuthGuard] },
+  { path: '', component: establecidasesikaLayoutComponent, data: { title: '' }, children: ESTABLECIDASESIKA_ROUTES, canActivate: [AuthGuard] },
+  { path: '', component: nuevasesikaLayoutComponent, data: { title: '' }, children: NUEVASESIKA_ROUTES, canActivate: [AuthGuard] },
   { path: '', component: OneColumnLayoutComponent, data: { title: '' }, children: ONE_COLUMN_ROUTES, canActivate: [AuthGuard] },
-  { path: '', component: TwoColumnsLayoutComponent, data: { title: '' }, children: TWO_COLUMN_ROUTES, canActivate: [AuthGuard] },
   { path: '', component: BoxedLayoutComponent, data: { title: '' }, children: BOXED_ROUTES, canActivate: [AuthGuard] },
   { path: '', component: DarkLayoutComponent, data: { title: '' }, children: DARK_ROUTES, canActivate: [AuthGuard] },
-  { path: '', component: DetachedLeftSidebarLayoutComponent, data: { title: '' }, children: DETACHED_LEFT_SIDEBAR_ROUTES, canActivate: [AuthGuard] },
   { path: '', component: DetachedRightSidebarLayoutComponent, data: { title: '' }, children: DETACHED_RIGHT_SIDEBAR_ROUTES, canActivate: [AuthGuard] },
   { path: '', component: DetachedStickyLeftSidebarLayoutComponent, data: { title: '' }, children: DETACHED_STICKY_LEFT_SIDEBAR_ROUTES, canActivate: [AuthGuard] },
   { path: '', component: DetachedStickyRightSidebarLayoutComponent, data: { title: '' }, children: DETACHED_STICKY_RIGHT_SIDEBAR_ROUTES, canActivate: [AuthGuard] },

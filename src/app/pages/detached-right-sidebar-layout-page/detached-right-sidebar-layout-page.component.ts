@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DatawebService } from '../../services/dataweb.service';
+import { Template } from '../../models/items';
+import { Data } from '@angular/router';
 
 @Component({
   selector: 'app-detached-right-sidebar-layout-page',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetachedRightSidebarLayoutPageComponent implements OnInit {
 
-  constructor() { }
+  templates: Template[];
+
+  constructor( private templateService: DatawebService) { }
 
   ngOnInit() {
+    // this.templateService.getFelicitaciones(sc).subscribe(templates => {
+    //   this.templates = templates;
+    // })
   }
 
 }

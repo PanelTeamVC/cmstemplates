@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DatawebService} from '../../services/dataweb.service';
 import { Template } from '../../models/items';
+
 @Component({
-  selector: 'app-detached-left-sidebar-layout-page',
-  templateUrl: './detached-left-sidebar-layout-page.component.html',
-  styleUrls: ['./detached-left-sidebar-layout-page.component.scss']
+  selector: 'app-2-columns-layout-page',
+  templateUrl: './home-layout-page.component.html',
+  styleUrls: ['./home-layout-page.component.scss']
 })
-export class DetachedLeftSidebarLayoutPageComponent implements OnInit {
+export class HomeLayoutPageComponent implements OnInit {
 
   templates: Template[];
   
@@ -17,7 +18,5 @@ export class DetachedLeftSidebarLayoutPageComponent implements OnInit {
     this.templates = templates;
     })       
   }
-
- 
 
 }
