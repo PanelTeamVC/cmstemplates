@@ -30,15 +30,14 @@ export class DatawebService {
 
   }
 
-
+  /**MOdelo de  */
   getEstablecidas(){
-        /**MOdelo 1, Jalal todos los campos */
+    /**MOdelo 1, Jalal todos los campos */
     // this.templatesCollection = this.afs.collection<Template>('templates');
     // this.templates = this.templatesCollection.valueChanges();
 
 
     /**MOdelo Jala con una condicional */
- 
     // this.templatesCollection = this.afs.collection<Template>('templates', ref => {
     //   return ref
     //             .where('categoria', '==', 'Establecidas-Esika')      
@@ -50,6 +49,23 @@ export class DatawebService {
 
   }
 
+  getNuevasEsika( sc: string){
+    /**Carga datos de Direstore con consultas */
+    this.templatesCollection = this.afs.collection<Template>('templates', ref => {
+      return ref
+                .where('tipo', '==', sc)
+                .where('categoria', '==' , 'Nuevas-Esika')   
+    });
+    this.templates = this.templatesCollection.valueChanges();
+    
+
+
+
+    return this,this.templates
+
+
+    //this.templates = this.afs.collection('templates').valueChanges();
+  }
 
 
   getEstablecidasEsika( sc: string){

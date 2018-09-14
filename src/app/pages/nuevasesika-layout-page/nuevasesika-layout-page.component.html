@@ -27,10 +27,10 @@
             
               <div class="card-body">
                   <p class="card-text"><small>{{template.nombre}}</small><br>
-                  <small>Semana: {{template.semana}}</small></p>
+                  <!-- <small>Semana: {{template.semana}}</small></p> -->
                   <!-- Card sample -->
                   <div class="text-center"> 
-                    <img class="card-img-top mb-1 img-fluid" [src]="'./assets/template/' + template.nombre + '.jpg'" alt="">
+                    <img class="card-img-top mb-1 img-fluid" [src]="'./assets/template/' + template.nombre + '.jpg'" alt="{{template.nombre}}">
                   </div>
                   <!-- <h4 class="card-title">L0070_EM_EK_ESK_LabialRadiance(Todos)_ES.html</h4> -->
                
@@ -52,13 +52,33 @@
                   </div> -->
                
                   <!-- <hr> -->
+
+                  <ng-template #customContent let-c="close" let-d="dismiss">
+                    
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{template.nombre}}</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- <iframe src="./assets/template/{{template.nombre}}.html" width="100%" height="600px" frameborder="0"> </iframe> -->
+                        <iframe width="100%" height="700" [src]="'./assets/template/' + template.nombre + '.html' | safe"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+                    </div>
+                </ng-template>
+              
+
                   <div class="sidebar-category">
                       <div class="row">
                         <div class="col-6">
-                          <button type="reset" class="btn btn-danger btn-block btn-sm">Previa</button>
+                          <button class="btn btn-danger btn-block btn-sm" (click)="openModal(customContent)">Previa</button>
+                          <!-- <button class="btn btn-lg btn-outline-primary" (click)="openModal(customContent)">Previa-</button> -->
                         </div>
                         <div class="col-6">
-                          <button type="submit" class="btn btn-info btn-block btn-sm">Descarga</button>
+                          <a href="" [href]="'./assets/template/' + template.nombre + '.zip'" type="submit" class="btn btn-info btn-block btn-sm">Descarga</a>
                         </div>
                       </div>
                   </div>

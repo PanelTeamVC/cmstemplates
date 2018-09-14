@@ -82,6 +82,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-block">
+                            
                             <ng-template #customContent let-c="close" let-d="dismiss">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Modal title</h4>
@@ -96,6 +97,8 @@
                                     <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
                                 </div>
                             </ng-template>
+
+                            
                             <button class="btn btn-lg btn-outline-primary" (click)="openModal(customContent)">Launch demo modal</button>
                         </div>
                     </div>

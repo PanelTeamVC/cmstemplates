@@ -68,5 +68,6 @@ export class ModalsComponent {
         const modalRef = this.modalService.open(NgbdModalContent);
         modalRef.componentInstance.name = 'World';
     }
+
 }
 

@@ -10,8 +10,9 @@ export const ROUTES: RouteInfo[] = [
         submenu: [
             { path: '/establecidasesika/felicitaciones', title: 'Felicitaciones', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             { path: '/establecidasesika/gestion', title: 'Gestión', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            { path: '/establecidasesika/lanzytops', title: 'Lanz. y Tops', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            
+            { path: '/establecidasesika/lanzamientos', title: 'Lanzamientos', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/establecidasesika/tops', title: 'Tops', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+          
             // {
             //     path: '', title: 'Lanz. y Tops', icon: '', class: 'menu-item has-sub', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false,
             //     submenu: [
@@ -39,22 +40,11 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '', title: 'Nuevas Ésika', icon: 'ft-box', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false,
         submenu: [        
-            { path: '/components/accordion', title: 'Accordion', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },   
-            // { path: '/components/alerts', title: 'Alerts', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/buttons', title: 'Buttons', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/carousel', title: 'Carousel', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/collapse', title: 'Collapse', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/datepicker', title: 'Datepicker', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/dropdowns', title: 'Dropdowns', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/models', title: 'Modals', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/pagination', title: 'Pagination', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/popover', title: 'Popover', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/progress', title: 'Progress Bars', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/rating', title: 'Rating', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/tabs', title: 'Tabs', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/timepicker', title: 'Timepicker', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/tooltip', title: 'Tooltip', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            // { path: '/components/typeahead', title: 'Typeahead', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] }
+            { path: '/nuevasesika/felicitaciones', title: 'Felicitaciones', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevasesika/gestion', title: 'Gestión', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevasesika/lanzamientos', title: 'Lanzamientos', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevasesika/tops', title: 'Tops', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+         
         ]
     },
     {
