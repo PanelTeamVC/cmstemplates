@@ -13,14 +13,11 @@ export class SafePipe implements PipeTransform {
   }
 }
 
-
 @Component({
   selector: 'app-detached-left-sidebar-layout-page',
   templateUrl: './nuevasesika-layout-page.component.html',
   styleUrls: ['./nuevasesika-layout-page.component.scss']
 })
-
-
 
 export class nuevasesikaLayoutPageComponent implements OnInit {
 
@@ -58,7 +55,7 @@ export class nuevasesikaLayoutPageComponent implements OnInit {
 
 
 
-  // Open modal with dark section
+  //Abrir modal
   openModal(customContent) {
     this.modalService.open(customContent, { windowClass: 'dark-modal', size: 'lg' });
   }

@@ -1,7 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
   import { DatawebService} from '../../services/dataweb.service';
   import { Template } from '../../models/items';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer } from "@angular/platform-browser";
+
+@Pipe({ name: 'safe' })
+export class SafePipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) { }
+  transform(url) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+}
+
 
 @Component({
   selector: 'app-detached-left-sidebar-layout-page',
@@ -16,7 +27,8 @@ export class establecidasesikaLayoutPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private templateService: DatawebService
+    private templateService: DatawebService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -39,6 +51,12 @@ export class establecidasesikaLayoutPageComponent implements OnInit {
                               
                             });
  
+  }
+
+
+  //Abrir modal
+  openModal(customContent) {
+    this.modalService.open(customContent, { windowClass: 'dark-modal', size: 'lg' });
   }
 
 

@@ -8,11 +8,13 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '', title: 'Establecidas Ésika', icon: 'ft-zap', class: 'nav-item has-sub', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false,
         submenu: [
-            { path: '/establecidasesika/felicitaciones', title: 'Felicitaciones', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            { path: '/establecidasesika/gestion', title: 'Gestión', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             { path: '/establecidasesika/lanzamientos', title: 'Lanzamientos', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             { path: '/establecidasesika/tops', title: 'Tops', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-          
+            { path: '/establecidasesika/felicitaciones', title: 'Felicitaciones', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/establecidasesika/recordatorios', title: 'Recordatorios', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/establecidasesika/gestion', title: 'Gestión', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/establecidasesika/venta', title: 'Venta', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+     
             // {
             //     path: '', title: 'Lanz. y Tops', icon: '', class: 'menu-item has-sub', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false,
             //     submenu: [
@@ -25,8 +27,8 @@ export const ROUTES: RouteInfo[] = [
             //         { path: '/detached-sticky-right-sidebar-layouta', title: 'Campaña 18', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             //     ]
             // },
-            { path: '/establecidasesika/recordatorios', title: 'Recordatorios', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            { path: '/establecidasesika/packs', title: 'Packs', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+          
+         
             // { path: '/fixed-navbar-navigation-layout', title: 'Fixed navbar & navigation', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             // { path: '/fixed-navbar-footer-layout', title: 'Fixed navbar & footer', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             // { path: '/fixed-layout', title: 'Fixed layout', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
@@ -39,18 +41,28 @@ export const ROUTES: RouteInfo[] = [
     },
     {
         path: '', title: 'Nuevas Ésika', icon: 'ft-box', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false,
-        submenu: [        
-            { path: '/nuevasesika/felicitaciones', title: 'Felicitaciones', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            { path: '/nuevasesika/gestion', title: 'Gestión', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+        submenu: [      
             { path: '/nuevasesika/lanzamientos', title: 'Lanzamientos', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-            { path: '/nuevasesika/tops', title: 'Tops', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
-         
+            { path: '/nuevasesika/tops', title: 'Tops', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },  
+            { path: '/nuevasesika/felicitaciones', title: 'Felicitaciones', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevasesika/recordatorios', title: 'Recordatorios', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevasesika/gestion', title: 'Gestión', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevasesika/packs', title: 'Packs', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevasesika/venta', title: 'Venta', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+     
         ]
     },
     {
         path: '', title: 'Establecidad L´Bel', icon: 'ft-zap', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false,
         submenu: [        
-            { path: '/components/accordion', title: 'Accordion', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },   
+            { path: '/establecidaslbel/lanzamientos', title: 'Lanzamientos', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },   
+            { path: '/establecidaslbel/tops', title: 'Tops', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/establecidaslbel/felicitaciones', title: 'Felicitaciones', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/establecidaslbel/recordatorios', title: 'Recordatorios', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/establecidaslbel/gestion', title: 'Gestión', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/establecidaslbel/venta', title: 'Venta', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+     
+       
             // { path: '/components/alerts', title: 'Alerts', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             // { path: '/components/buttons', title: 'Buttons', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             // { path: '/components/carousel', title: 'Carousel', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
@@ -71,7 +83,12 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '', title: 'Nuevas L´Bel ', icon: 'ft-box', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false,
         submenu: [        
-            { path: '/components/accordion', title: 'Accordion', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },   
+            { path: '/nuevaslbel/lanzamientos', title: 'Lanzamientos', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },   
+            { path: '/nuevaslbel/tops', title: 'Tops', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevaslbel/felicitaciones', title: 'Felicitaciones', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevaslbel/recordatorios', title: 'Recordatorios', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevaslbel/gestion', title: 'Gestión', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
+            { path: '/nuevaslbel/venta', title: 'Venta', icon: '', class: 'menu-item', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             // { path: '/components/alerts', title: 'Alerts', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             // { path: '/components/buttons', title: 'Buttons', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },
             // { path: '/components/carousel', title: 'Carousel', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, isNavHeader: false, submenu: [] },

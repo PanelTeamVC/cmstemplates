@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from '@angular/forms';
 
 import { establecidasesikaLayoutPagesRoutingModule } from "./establecidasesika-layout-page-routing.module";
-import { establecidasesikaLayoutPageComponent } from './establecidasesika-layout-page.component';
+import { establecidasesikaLayoutPageComponent, SafePipe  } from './establecidasesika-layout-page.component';
 
 
 
@@ -14,7 +14,8 @@ import { establecidasesikaLayoutPageComponent } from './establecidasesika-layout
         FormsModule        
     ],
     declarations: [
-        establecidasesikaLayoutPageComponent
+        establecidasesikaLayoutPageComponent,
+        SafePipe
     ]
 })
 export class establecidasesikaLayoutPagesModule { }

@@ -1,0 +1,2527 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><!--sapMktConditionHelper-->
+    <!-- temporary included javascript lib, coming from SAP Marketing message editor; do not touch; it will be removed with upload file automatically -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <style type="text/css">
+        div[data-sap-hpa-ceimo-block-type='SUBJECT'] .sapConditionHoverBtn {
+            right: 0;
+        }
+        .sapConditionBtn {
+            display: block;
+            width: 100%;
+            margin: 5px 0px;
+            padding: 2px 20px;
+        }
+        .sapConditionHelper {
+            background-color: lightgray;
+            padding: 0px 5px;
+            opacity: 0.8;
+        }
+        .sapConditionBtnActive {
+            border: 1px solid lightgrey;
+        }
+        .sapConditionHoverBtn {
+            padding: 2px 20px;
+            opacity: 0.8;
+        }
+        .hideSapConditionHoverBtn {
+            display: none;
+        }
+        div[data-sap-hpa-ceimo-condition]:nth-child(2) {
+        	display: inherit;
+        } 
+    </style>
+    <script type="text/javascript">
+        var defaultConditionLabel = "Valor por defecto";
+        $(document).ready(function () {
+            var aCondtions = [];
+            $("div[data-sap-hpa-ceimo-condition]").each(function () {
+            	if ($(this).attr("data-sap-hpa-ceimo-block-type") === "ASC") {
+                    return;
+                }
+                var sCondition = $(this).data("sap-hpa-ceimo-condition");
+                if (aCondtions.indexOf(sCondition) <= -1) {
+                    aCondtions.push(sCondition);
+                }
+                sCondition = sCondition === "" ? defaultConditionLabel : sCondition;
+                var sConditionHoverBtn = "<button class='sapConditionHoverBtn hideSapConditionHoverBtn' style='position: absolute'>" + sCondition + "</button>" + $(this).html();
+                $(this).html(sConditionHoverBtn);
+                $(this).hover(function () {
+                    $($(this).children()[0]).removeClass("hideSapConditionHoverBtn");
+                }, function () {
+                    $(".sapConditionHoverBtn").addClass("hideSapConditionHoverBtn");
+                });
+            });
+            aCondtions.reverse();
+            if (aCondtions.length > 0) {
+                $("body").after("<div class='sapConditionHelper' style='position: fixed; left: 0; top: 0;' ><strong class='sapConditionBtn'>Condiciones:</strong></div>");
+                $.each(aCondtions, function (iIndex, oButton) {
+                    var btnLabel = !this || this.length === 0 ? defaultConditionLabel : this;
+                    $(".sapConditionHelper").html($(".sapConditionHelper").html() + "<button class='sapConditionBtn' data-sap-hpa-ceimo-condition='" + this + "'>" + btnLabel + "</button>");
+                });
+                $(".sapConditionHelper").html($(".sapConditionHelper").html() + "<button class='sapConditionBtn' data-sap-hpa-ceimo-condition='__all__'>Todo</button> ");
+                $("button[data-sap-hpa-ceimo-condition]").each(function () {
+                    $(this).click(function () {
+                        $(".sapConditionBtn").removeClass("sapConditionBtnActive");
+                        $(this).addClass("sapConditionBtnActive");
+                        var sCondition = $(this).data("sap-hpa-ceimo-condition");
+                        $("div[data-sap-hpa-ceimo-condition]").each(function () {
+                            $(this).show();
+                        });
+                        if (sCondition !== "__all__") {
+                            $("div[data-sap-hpa-ceimo-condition]").each(function () {
+                                if ($(this).data("sap-hpa-ceimo-condition") !== sCondition) {
+                                    $(this).hide();
+                                }
+                                var sBlockId = $(this).data("sap-hpa-ceimo-blockid");
+                                var bFound = false;
+                                $("div[data-sap-hpa-ceimo-blockid='" + sBlockId + "']").each(function () {
+                                    if ($(this).data("sap-hpa-ceimo-condition") !== "" && $(this).data("sap-hpa-ceimo-condition") === sCondition) {
+                                        bFound = true;
+                                        return false;
+                                    }
+                                });
+                                if (!bFound && $(this).data("sap-hpa-ceimo-condition") === "") {
+                                    $(this).show();
+                                }
+                            });
+                        }
+                    });
+                });
+                $("button[data-sap-hpa-ceimo-condition='']").click();
+            }
+        });
+    </script>
+    <!--sapMktConditionHelper-->
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style type="text/css">
+        /* CLIENT-SPECIFIC STYLES */
+
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* RESET STYLES */
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        a.disable-link {
+            pointer-events: none;
+            cursor: default;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+
+        .cabecera {
+            background-image: url(http://s3.amazonaws.com/consultorasQAS/Unete/Images/mailings/bg_cabecera.png);
+            background-color: #333;
+            margin: 0;
+            max-width: 600px;
+        }
+
+        /* iOS BLUE LINKS */
+
+        a[x-apple-data-detectors=true] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* MEDIA QUERIES */
+
+        @media only screen and (max-width:550px) {
+            /* .parrafo_mobile{
+                    font-size: 27px !important;
+                 } */
+            .table_mobile {
+                max-width: 90% !important;
+            }
+  .numeros{
+                width: 50px !important;
+            }
+            .numeros .pd_15{
+                margin: 0px 5px 0 15px !important;
+            }
+            .section2 .left {
+                width: 100% !important;
+                float: left !important;
+            }
+            .section2 .left strong {
+                width: 82% !important;
+            }
+            .section2 .left p {
+                width: 82% !important;
+                margin: 0px 0px 0px 30px !important;
+            }
+            .section2 .left p b{
+                margin-bottom: 15px;
+                display: block;
+            }
+
+            .section2 .left ul {
+                width: 80% !important;
+                padding-bottom: 0px !important;
+            }
+
+            .section2 .right {
+                text-align: center !important;
+                width: 100% !important;
+                float: left !important;
+            }
+
+			.section2 .right img {
+margin-left: auto  !important;
+margin-right: auto !important;
+
+}
+
+
+
+            .section2_2 .left {
+                text-align: center !important;
+                width: 100% !important;
+                float: left !important;
+            }
+
+            .section2_2 .left img {
+                margin-left: 0px !important;
+                margin-bottom: 0px !important;
+            }
+
+            .section2_2 .right {
+                width: 100% !important;
+                float: left !important;
+                padding-top: 0px !important;
+                padding-bottom: 45px !important;
+            }
+            .section2_2 .right strong {
+                width: 82% !important;
+            }
+            .section2_2 .right p {
+                width: 82% !important;
+                margin: 0px 0px 0px 30px !important;
+            }
+            .section2_2 .right p b {
+                margin-bottom: 15px !important;
+                display: block  !important;
+            }
+
+            .section_prod3 .column {
+                width: 82% !important;
+                float: left !important;
+                /* padding-left: 0px !important; */
+            }
+            .section_prod3 .column img {
+                display: block !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            .section_prod3 .column strong {
+                width: 82% !important;
+            }
+            .section_prod3 .column p {
+                width: 82% !important;
+            }
+
+            .section_prod2 .column1 {
+                width: 100% !important;
+                float: left !important;
+            }
+
+
+
+            .section_prod2 .column2 {
+                width: 100% !important;
+                float: left !important;
+            }
+
+            .section_prodcont2 .column1 {
+                width: 100% !important;
+                float: left !important;
+            }
+
+            .section_prodcont2 .column1 p {
+                margin-left: 0 !important;
+            }
+
+            .section_prodcont2 .column2 {
+                width: 100% !important;
+                float: left !important;
+            }
+
+
+            .section_cont2 .column1 {
+                width: 100% !important;
+                float: left !important;
+            }
+
+            .section_cont2 .column1 ul {
+                margin-bottom: 0px !important;
+                width: 75% !important;
+            }
+
+            .section_cont2 .column2 {
+                width: 100% !important;
+                float: left !important;
+
+            }
+            .section_cont2 .column2 ul {
+                width: 75% !important;
+                margin-bottom: 45px !important;
+            }
+
+            .section_cont1 .column ul {
+                width: 75% !important;
+            }
+
+            .section_contbullet2 .column1 {
+                padding-bottom: 0px !important;
+            }
+            .section_contbullet2 .column2 {
+                padding-top: 0px !important;
+                padding-left: 5px !important;
+            }
+
+            .section2_img .left {
+                text-align: center !important;
+                width: 100% !important;
+                float: left !important;
+            }
+
+            .section2_img .left img {
+                margin-left: 0px !important;
+                margin-bottom: 0px !important;
+            }
+
+            .section2_img .right {
+                width: 100% !important;
+                float: left !important;
+                padding-left: 0px !important;
+            }
+
+            .section2_img .right img {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                display: block !important;
+            }
+
+            .section1_img .column img {
+                width: 91% !important;
+            }
+            .section1_img .column{
+                height: auto !important; 
+            }
+
+            .footer .column1 {
+                width: 100% !important;
+                text-align: center !important;
+                padding-left: 0px !important;
+            }
+            .footer .column1 img {
+                margin-left: 0px !important;
+            }
+
+            .footer .column2 {
+                width: 83% !important;
+                float: none !important;
+                display: block !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+
+        }
+
+        @media screen and (max-width: 480px) {
+            .mobile-hide {
+                display: none !important;
+            }
+            .mobile-center {
+                text-align: center !important;
+            }
+            .centerImage {
+                width: 100%!important;
+            }
+            .centerMobile {
+                text-align: center;
+            }
+            .noPaddingTop {
+                padding-top: 35px!important;
+            }
+            a[class="disable-link"] {
+                pointer-events: auto !important;
+                cursor: auto !important;
+                text-decoration: underline!important;
+            }
+
+        }
+
+        /* ANDROID CENTER FIX */
+
+        div[style*="margin: 16px 0;"] {
+            margin: 0 !important;
+        }
+    </style>
+</head>
+
+<body topmargin="0" leftmargin="0" marginheight="0" marginwidth="0" style="font-family:Arial, Helvetica, Arial, sans-serif">
+
+<div style="text-align: center; width: 100%; padding: 10px;" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="SUBJECT"
+data-sap-hpa-ceimo-condition=""
+data-sap-hpa-ceimo-blockid="migrated_subjectES"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable="X">
+¿Quieres aclarar, afirmar e iluminar tu piel? ¡Esto es para ti!</div>
+
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition=""
+data-sap-hpa-ceimo-blockid="1530221273619979"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable="X">
+<div style="display: none!important; font-size: 1px; color: #333333; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">Concentr&eacute; Total de L&acute;Bel es para cada necesidad de la piel de tus clientes.</div>
+</div><!--[if mso]></td></tr></table><![endif]-->
+
+<!--# BEGINNING OF reusable block area [Header_Esika] - Note: Changes to this area are not observed during the upload. --><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition=""
+data-sap-hpa-ceimo-blockid="15321223067681159"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="1167">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+                                    <table width="600" align="center" border="0" cellpadding="0" cellspacing="0" >
+                                    <tr> <td>
+                                    <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" width="100%"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com" target="_blank" title="Header" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-id="201809032256392" data-sap-hpa-ceimo-link-alias="EsikaHeader"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Header/Header_Multimarca/header_multimarca.jpg" alt="Somos Belcorp" title="Somos Belcorp" width="100%" style="width: 100%; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965839225905" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--# END OF reusable block area [Header_Esika] -->
+
+<!--# BEGINNING OF reusable block area [EK_Concentre(GT-SV-DO)] - Note: Changes to this area are not observed during the upload. --><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="Ésika"
+data-sap-hpa-ceimo-blockid="15321223444701183"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="1233">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+                                    <table width="600" align="center"   border="0" cellpadding="0" cellspacing="0"  >
+                                    <tr> <td>
+                                    <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" width="100%"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="BannerSuperior" data-sap-hpa-ceimo-link-id="2018090621170411" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|" data-sap-hpa-ceimo-link-alias="ImgComprarSuperior"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre-Rostro.gif" alt="Concentr&eacute; total" title="Concentr&eacute; total" width="100%" style="width: 100%; opacity: 1;" data-sap-hpa-ceimo-image-id="15300532253531153" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<div style="background: #ebe8e8;"><!--[if (gte mso 9)|(IE)]>
+                                                <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" align="center" >
+                                                <tr> <td>
+                                                <![endif]-->
+<table class="table_mobile" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;">
+<p style="font-size: 20px; line-height: 20px; color: #000000; margin-top: 0px; margin-bottom: 15px; display: block; font-weight: bold; font-family: 'Arial', 'ArialMT', sans-serif;">&iexcl;Hola!</p>
+<h2 style="font-size: 18px; color: #000000; margin: 0; line-height: 25px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 50px; padding-right: 50px; font-weight: bold;">Concentr&eacute; Total de L'Bel es para todas las necesidades de la piel.</h2>
+</td>
+</tr>
+<tr>
+<td align="center" height="90" width="100%" valign="top" style="vertical-align: top;"><center>
+<table border="0" cellspacing="0" cellpadding="0" width="210px" height="45px" style="width: 210px; background: #8c581a; margin: 0px 0px 45px 0px; height: 45px; border-radius: 5px;">
+<tbody>
+<tr>
+<td height="45px" style="padding: 0px; height: 45px;">
+<p class="MsoNormal" align="center" style="text-align: center; padding: 0px; margin: 0px;"><span style="font-family: Arial, Helvetica, sans-serif; color: white;"> <a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="ENT&Eacute;RATE M&Aacute;S" style="color: #ffffff; text-decoration: none; width: 210px; display: block; padding: 15px 0 13px 0; font-size: 16px; font-weight: normal; line-height: 17px;" data-sap-hpa-ceimo-link-id="2018090621170412" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|" data-sap-hpa-ceimo-link-alias="BtnComprarSuperior">ENT&Eacute;RATE M&Aacute;S</a> </span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                </td>
+            </tr>
+        </table>
+        <![endif]--> <!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15300532253531154" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+                                                            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+                                                            <tr> <td>
+                                                            <![endif]-->
+<table class="table_mobile" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" height="30px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;" colspan="2"></td>
+</tr>
+<tr>
+<td align="center" width="100%" style="padding: 0px 0 0px;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Icono_SinDemostrador.jpg" alt="Imagen" title="Imagen" style="opacity: 1;" data-sap-hpa-ceimo-image-id="15300532253531156" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr>
+<td align="center" height="30px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;" colspan="2"></td>
+</tr>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;" colspan="2">
+<h2 style="font-size: 20px; color: #000000; margin: 0; line-height: 20px; margin-bottom: 25px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 30px; padding-right: 30px; font-weight: bold; padding-top: 0px;">TEN UNA VENTA EXITOSA EN 3 PASOS</h2>
+</td>
+</tr>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;" colspan="2">
+<p style="font-size: 16px; color: #000000; margin: 0; line-height: 17px; margin-bottom: 25px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 50px; padding-right: 50px; font-weight: normal;">Concentr&eacute; Total identifica y se adapta a las necesidades &uacute;nicas del rostro de cada cliente.</p>
+</td>
+</tr>
+<tr>
+<td align="left" width="80" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 80px; padding-top: 0px; vertical-align: top; display: block;" class="numeros">
+<p class="pd_15" style="font-size: 40px; line-height: 42px; display: inline-block; margin: 0px 25px 0 30px; font-family: Arial; width: 25px; text-align: left; vertical-align: top;">1</p>
+</td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 85%; font-size: 18px; color: #000000; padding-top: 0px; padding-right: 30px; vertical-align: top;"><strong style="font-size: 16px; display: inline-block; width: 100%; margin: 10px 0 0 0; font-family: 'Arial', 'Arial-BoldMT', sans-serif;">Presenta sus beneficios</strong>
+<ul style="margin: 0; padding: 15px 0 30px 20px;">
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Aclara</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Afirma</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Aliza</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Hidrata</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Ilumina</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Fortalece</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Revitaliza</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" width="80" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 80px; padding-top: 0px; vertical-align: top; display: block;" class="numeros">
+<p class="pd_15" style="font-size: 40px; line-height: 42px; display: inline-block; margin: 0px 25px 0 30px; font-family: Arial; width: 25px; text-align: left;">2</p>
+</td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 85%; font-size: 18px; color: #000000; padding-top: 0px; padding-right: 30px; vertical-align: top;"><strong style="font-size: 16px; display: inline-block; width: 100%; margin: 10px 0 0 0; font-family: 'Arial', 'Arial-BoldMT', sans-serif;">Demuestra sus caracter&iacute;sticas</strong>
+<p style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 15px 0 30px; display: block;">Usa los demostradores para que tus clientes sientan la textura y el aroma. Es la mejor experiencia para asegurar la venta.</p>
+</td>
+</tr>
+<tr>
+<td align="left" width="80" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 80px; padding-top: 0px; vertical-align: top; display: block;" class="numeros">
+<p class="pd_15" style="font-size: 40px; line-height: 42px; display: inline-block; margin: 0px 25px 0 30px; font-family: Arial; width: 25px; text-align: left;">3</p>
+</td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 85%; font-size: 18px; color: #000000; padding-top: 0px; padding-right: 40px; vertical-align: top;"><strong style="font-size: 16px; display: inline-block; width: 100%; margin: 10px 0 0 0; font-family: 'Arial', 'Arial-BoldMT', sans-serif;">Cierra la venta con &eacute;xito</strong>
+<p style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 10px 0 0px; display: block;">Preg&uacute;ntale: &ldquo;&iquest;Te pido s&oacute;lo Concentr&eacute; Total Rostro o la rutina completa de Concentr&eacute; Total?&rdquo;</p>
+</td>
+</tr>
+<tr>
+<td align="center" height="45px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 45px;" colspan="2"></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15300532253531157" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<table class="table_mobile" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; padding-top: 25px;">
+<h2 style="font-size: 18px; color: #000000; margin: 0; line-height: 25px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 30px; padding-right: 30px; font-weight: bold;">Asegura pedidos con Concentr&eacute; Total de L'Bel</h2>
+</td>
+</tr>
+<tr>
+<td align="center" width="100%" style="padding-bottom: 45px; vertical-align: top;"><center>
+<table border="0" cellspacing="0" cellpadding="0" width="210px" height="45px" style="width: 210px; background: #8c581a; margin: 0px 0px 0px 0px; height: 45px; border-radius: 5px;">
+<tbody>
+<tr>
+<td height="45px" style="padding: 0px; height: 45px;">
+<p class="MsoNormal" align="center" style="text-align: center; padding: 0px; margin: 0px;"><span style="font-family: Arial, Helvetica, sans-serif; color: white;"> <a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="ENT&Eacute;RATE M&Aacute;S" style="color: #ffffff; text-decoration: none; width: 210px; display: block; padding: 15px 0 13px 0; font-size: 16px; font-weight: normal; line-height: 17px;" data-sap-hpa-ceimo-link-id="2018090621170413" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-alias="BtnComprarCentro" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|">ENT&Eacute;RATE M&Aacute;S</a> </span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                                                            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+                                                            <tr> <td>
+                                                            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15300532253531157" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+                                                            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+                                                            <tr> <td>
+                                                            <![endif]-->
+<table class="table_mobile section_prod3" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" height="50px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;" colspan="3"></td>
+</tr>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;" colspan="3">
+<h2 style="font-size: 20px; color: #000000; margin: 0; line-height: 22px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 30px; padding-right: 30px; font-weight: bold; padding-top: 0px;">Conoce y presenta toda la l&iacute;nea Concentr&eacute;</h2>
+</td>
+</tr>
+<tr>
+<td align="left" width="140" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 140px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; padding-left: 30px;" class="column"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre_ojos.jpg" alt="Imagen" title="Imagen" style="margin: 0px 0px 15px 0px; opacity: 1;" data-sap-hpa-ceimo-image-id="1530130374125375" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> <strong style="font-family: Arial; font-size: 16px; margin-left: 0px; display: inline-block; width: 140px; padding: 0px; margin-bottom: 15px;">Especializado en Ojos</strong>
+<p style="font-family: Arial; font-size: 16px; margin: 0px 0px 45px 0px; display: inline-block; width: 140px;">Disminuye ojeras y bolsas, alisa, hidrata y afirma el contorno de los ojos.</p>
+</td>
+<td align="left" width="140" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 140px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; float: left; padding-left: 30px;" class="column"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre_total.jpg" alt="Imagen" title="Imagen" style="margin: 0px 0px 15px 0px; opacity: 1;" data-sap-hpa-ceimo-image-id="1530130374125376" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> <strong style="font-family: Arial; font-size: 16px; margin: 0px 0px 15px 0px; display: block; width: 140px;">Soluci&oacute;n <br /> Firmeza</strong>
+<p style="font-family: Arial; font-size: 16px; margin: 0px 0px 45px 0px; display: inline-block; width: 140px;">Combate la flacidez donde es m&aacute;s evidente: rostro, cuello y escote.</p>
+</td>
+<td align="left" width="170" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 170px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; padding-left: 30px;" class="column"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre_rostro.jpg" alt="Imagen" title="Imagen" style="margin: 0px 0px 15px 0px; opacity: 1;" data-sap-hpa-ceimo-image-id="1530130374125377" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> <strong style="font-family: Arial; font-size: 16px; margin: 0px 0px 15px 0px; display: block; width: 140px;">Soluci&oacute;n Multibeneficios </strong>
+<p style="font-family: Arial; font-size: 16px; margin: 0px 0px 45px 0px; display: inline-block; width: 140px;">Aclara, alisa, hidrata, revitaliza y fortalece la piel del rostro.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+<table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+  <tr>
+<td>
+<![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="1530130374125378" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+        </td>
+    </tr>
+</table>
+<![endif]--> <!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+            <tr>
+            <td>
+            <![endif]-->
+<table class="table_mobile section_prodcont2" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" height="30px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;" colspan="3"></td>
+</tr>
+<tr>
+<td width="255" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 255px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; padding-bottom: 45px;" class="column1">
+<p style="margin: 0 0 0px 30px; text-align: center; display: block;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="BannerInferior" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-id="2018090621170414" data-sap-hpa-ceimo-link-alias="ImgComprarInferior" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre_acompanamiento.jpg" alt="Imagen" title="Imagen" style="margin: 0px; opacity: 1;" data-sap-hpa-ceimo-image-id="15300532253531158" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></a></p>
+</td>
+<td align="left" width="285" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 285px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: bottom; padding-bottom: 48px;" class="column2">
+<p style="font-family: Arial; font-size: 20px; margin: 0px 0px 15px 30px; width: 210px; line-height: 22px; display: inline-block;"><b>Concentr&eacute; Total <br />de L'Bel</b></p>
+<p style="font-family: Arial; font-size: 18px; margin: 0px 0px 15px 30px; display: inline-block; width: 210px;">Asegura pedidos&nbsp;</p>
+<table border="0" cellspacing="0" cellpadding="0" width="210px" style="width: 210px; background: #8c581a; margin: 0px 0px 0px 30px; border-radius: 5px;" height="45px">
+<tbody>
+<tr>
+<td height="45px" style="padding: 0px; height: 45px;">
+<p class="MsoNormal" align="center" style="text-align: center; padding: 0px; margin: 0px;"><span style="font-family: Arial, Helvetica, sans-serif; color: white;"> <a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="ENT&Eacute;RATE M&Aacute;S" style="color: #ffffff; text-decoration: none; width: 210px; display: block; padding: 15px 0 13px 0; font-size: 16px; font-weight: normal; line-height: 17px;" data-sap-hpa-ceimo-link-id="2018090621170415" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|" data-sap-hpa-ceimo-link-alias="BtnComprarInferior">ENT&Eacute;RATE M&Aacute;S</a> </span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15300532253531159" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table class="table_mobile" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; padding-top: 25px;">
+<h2 style="font-size: 18px; color: #000000; margin: 0; line-height: 25px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 50px; padding-right: 50px; font-weight: bold;">Mira todas las ofertas que tenemos para ti</h2>
+</td>
+</tr>
+<tr>
+<td align="center" width="100%" style="padding-bottom: 40px; vertical-align: top;"><center><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Ofertas" target="_blank" title="Ir a Ofertas" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-id="2018090621170416" data-sap-hpa-ceimo-link-alias="ImgOferta"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Call_To_Action/CTA.gif" alt="Ir a Oferta" title="Ir a Oferta" style="opacity: 1;" data-sap-hpa-ceimo-image-id="1532037381658748" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></a></center></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15299735302683635" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--><!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table class="table_mobile section_cont1" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" height="30px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;"></td>
+</tr>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;">
+<h2 style="font-size: 20px; color: #000000; margin: 0; line-height: 20px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 30px; padding-right: 30px; font-weight: bold; padding-top: 0px;">TUS HERRAMIENTAS DE NEGOCIO:</h2>
+</td>
+</tr>
+<tr>
+<td align="left" width="255px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 255px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; padding-left: 30px; padding-bottom: 25px;" class="column">
+<ul style="margin: 0px; padding: 0px 0 0px 20px; width: 90%;">
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/HerramientasVenta/Comprar" target="_blank" title="Demostradores" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-id="2018090621170417" data-sap-hpa-ceimo-link-alias="LinkDemostradores">Demostradores</a>&nbsp;para vender m&aacute;s esta campa&ntilde;a.</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/MisCatalogosRevistas" target="_blank" title="Comparte cat&aacute;logos" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-id="2018090621170418" data-sap-hpa-ceimo-link-alias="LinkCatalogo">Comparte cat&aacute;logos</a> gratis, f&aacute;cil y r&aacute;pido.&nbsp;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition=""
+data-sap-hpa-ceimo-blockid="15321223444701183"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="1233">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+                                    <table width="600" align="center"   border="0" cellpadding="0" cellspacing="0"  >
+                                    <tr> <td>
+                                    <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" width="100%"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="BannerSuperior" data-sap-hpa-ceimo-link-id="201809062117043" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|" data-sap-hpa-ceimo-link-alias="ImgComprarSuperior"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre-Rostro.gif" alt="Concentr&eacute; total" title="Concentr&eacute; total" width="100%" style="width: 100%; opacity: 1;" data-sap-hpa-ceimo-image-id="15300532253531153" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<div style="background: #ebe8e8;"><!--[if (gte mso 9)|(IE)]>
+                                                <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" align="center" >
+                                                <tr> <td>
+                                                <![endif]-->
+<table class="table_mobile" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;">
+<p style="font-size: 20px; line-height: 20px; color: #000000; margin-top: 0px; margin-bottom: 15px; display: block; font-weight: bold; font-family: 'Arial', 'ArialMT', sans-serif;">&iexcl;Hola!</p>
+<h2 style="font-size: 18px; color: #000000; margin: 0; line-height: 25px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 50px; padding-right: 50px; font-weight: bold;">Concentr&eacute; Total de L'Bel es para todas las necesidades de la piel.</h2>
+</td>
+</tr>
+<tr>
+<td align="center" height="90" width="100%" valign="top" style="vertical-align: top;"><center>
+<table border="0" cellspacing="0" cellpadding="0" width="210px" height="45px" style="width: 210px; background: #8c581a; margin: 0px 0px 45px 0px; height: 45px; border-radius: 5px;">
+<tbody>
+<tr>
+<td height="45px" style="padding: 0px; height: 45px;">
+<p class="MsoNormal" align="center" style="text-align: center; padding: 0px; margin: 0px;"><span style="font-family: Arial, Helvetica, sans-serif; color: white;"> <a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="ENT&Eacute;RATE M&Aacute;S" style="color: #ffffff; text-decoration: none; width: 210px; display: block; padding: 15px 0 13px 0; font-size: 16px; font-weight: normal; line-height: 17px;" data-sap-hpa-ceimo-link-id="201809062117044" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|" data-sap-hpa-ceimo-link-alias="BtnComprarSuperior">ENT&Eacute;RATE M&Aacute;S</a> </span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                </td>
+            </tr>
+        </table>
+        <![endif]--> <!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15300532253531154" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+                                                            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+                                                            <tr> <td>
+                                                            <![endif]-->
+<table class="table_mobile" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" height="30px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;" colspan="2"></td>
+</tr>
+<tr>
+<td align="center" width="100%" style="padding: 0px 0 0px;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Icono_SinDemostrador.jpg" alt="Imagen" title="Imagen" style="opacity: 1;" data-sap-hpa-ceimo-image-id="15300532253531156" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr>
+<td align="center" height="30px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;" colspan="2"></td>
+</tr>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;" colspan="2">
+<h2 style="font-size: 20px; color: #000000; margin: 0; line-height: 20px; margin-bottom: 25px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 30px; padding-right: 30px; font-weight: bold; padding-top: 0px;">TEN UNA VENTA EXITOSA EN 3 PASOS</h2>
+</td>
+</tr>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;" colspan="2">
+<p style="font-size: 16px; color: #000000; margin: 0; line-height: 17px; margin-bottom: 25px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 50px; padding-right: 50px; font-weight: normal;">Concentr&eacute; Total identifica y se adapta a las necesidades &uacute;nicas del rostro de cada cliente.</p>
+</td>
+</tr>
+<tr>
+<td align="left" width="80" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 80px; padding-top: 0px; vertical-align: top; display: block;" class="numeros">
+<p class="pd_15" style="font-size: 40px; line-height: 42px; display: inline-block; margin: 0px 25px 0 30px; font-family: Arial; width: 25px; text-align: left; vertical-align: top;">1</p>
+</td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 85%; font-size: 18px; color: #000000; padding-top: 0px; padding-right: 30px; vertical-align: top;"><strong style="font-size: 16px; display: inline-block; width: 100%; margin: 10px 0 0 0; font-family: 'Arial', 'Arial-BoldMT', sans-serif;">Presenta sus beneficios</strong>
+<ul style="margin: 0; padding: 15px 0 30px 20px;">
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Aclara</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Afirma</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Aliza</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Hidrata</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Ilumina</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Fortalece</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;">Revitaliza</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" width="80" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 80px; padding-top: 0px; vertical-align: top; display: block;" class="numeros">
+<p class="pd_15" style="font-size: 40px; line-height: 42px; display: inline-block; margin: 0px 25px 0 30px; font-family: Arial; width: 25px; text-align: left;">2</p>
+</td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 85%; font-size: 18px; color: #000000; padding-top: 0px; padding-right: 30px; vertical-align: top;"><strong style="font-size: 16px; display: inline-block; width: 100%; margin: 10px 0 0 0; font-family: 'Arial', 'Arial-BoldMT', sans-serif;">Demuestra sus caracter&iacute;sticas</strong>
+<p style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 15px 0 30px; display: block;">Usa los demostradores para que tus clientes sientan la textura y el aroma. Es la mejor experiencia para asegurar la venta.</p>
+</td>
+</tr>
+<tr>
+<td align="left" width="80" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 80px; padding-top: 0px; vertical-align: top; display: block;" class="numeros">
+<p class="pd_15" style="font-size: 40px; line-height: 42px; display: inline-block; margin: 0px 25px 0 30px; font-family: Arial; width: 25px; text-align: left;">3</p>
+</td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 85%; font-size: 18px; color: #000000; padding-top: 0px; padding-right: 40px; vertical-align: top;"><strong style="font-size: 16px; display: inline-block; width: 100%; margin: 10px 0 0 0; font-family: 'Arial', 'Arial-BoldMT', sans-serif;">Cierra la venta con &eacute;xito</strong>
+<p style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 10px 0 0px; display: block;">Preg&uacute;ntale: &ldquo;&iquest;Te pido s&oacute;lo Concentr&eacute; Total Rostro o la rutina completa de Concentr&eacute; Total?&rdquo;</p>
+</td>
+</tr>
+<tr>
+<td align="center" height="45px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 45px;" colspan="2"></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15300532253531157" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<table class="table_mobile" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; padding-top: 25px;">
+<h2 style="font-size: 18px; color: #000000; margin: 0; line-height: 25px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 30px; padding-right: 30px; font-weight: bold;">Asegura pedidos con Concentr&eacute; Total de L'Bel</h2>
+</td>
+</tr>
+<tr>
+<td align="center" width="100%" style="padding-bottom: 45px; vertical-align: top;"><center>
+<table border="0" cellspacing="0" cellpadding="0" width="210px" height="45px" style="width: 210px; background: #8c581a; margin: 0px 0px 0px 0px; height: 45px; border-radius: 5px;">
+<tbody>
+<tr>
+<td height="45px" style="padding: 0px; height: 45px;">
+<p class="MsoNormal" align="center" style="text-align: center; padding: 0px; margin: 0px;"><span style="font-family: Arial, Helvetica, sans-serif; color: white;"> <a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="ENT&Eacute;RATE M&Aacute;S" style="color: #ffffff; text-decoration: none; width: 210px; display: block; padding: 15px 0 13px 0; font-size: 16px; font-weight: normal; line-height: 17px;" data-sap-hpa-ceimo-link-id="201809062117045" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-alias="BtnComprarCentro" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|">ENT&Eacute;RATE M&Aacute;S</a> </span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                                                            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+                                                            <tr> <td>
+                                                            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15300532253531157" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+                                                            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+                                                            <tr> <td>
+                                                            <![endif]-->
+<table class="table_mobile section_prod3" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" height="50px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;" colspan="3"></td>
+</tr>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;" colspan="3">
+<h2 style="font-size: 20px; color: #000000; margin: 0; line-height: 22px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 30px; padding-right: 30px; font-weight: bold; padding-top: 0px;">Conoce y presenta toda la l&iacute;nea Concentr&eacute;</h2>
+</td>
+</tr>
+<tr>
+<td align="left" width="140" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 140px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; padding-left: 30px;" class="column"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre_ojos.jpg" alt="Imagen" title="Imagen" style="margin: 0px 0px 15px 0px; opacity: 1;" data-sap-hpa-ceimo-image-id="1530130374125375" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> <strong style="font-family: Arial; font-size: 16px; margin-left: 0px; display: inline-block; width: 140px; padding: 0px; margin-bottom: 15px;">Especializado en Ojos</strong>
+<p style="font-family: Arial; font-size: 16px; margin: 0px 0px 45px 0px; display: inline-block; width: 140px;">Disminuye ojeras y bolsas, alisa, hidrata y afirma el contorno de los ojos.</p>
+</td>
+<td align="left" width="140" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 140px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; float: left; padding-left: 30px;" class="column"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre_total.jpg" alt="Imagen" title="Imagen" style="margin: 0px 0px 15px 0px; opacity: 1;" data-sap-hpa-ceimo-image-id="1530130374125376" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> <strong style="font-family: Arial; font-size: 16px; margin: 0px 0px 15px 0px; display: block; width: 140px;">Soluci&oacute;n <br /> Firmeza</strong>
+<p style="font-family: Arial; font-size: 16px; margin: 0px 0px 45px 0px; display: inline-block; width: 140px;">Combate la flacidez donde es m&aacute;s evidente: rostro, cuello y escote.</p>
+</td>
+<td align="left" width="170" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 170px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; padding-left: 30px;" class="column"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre_rostro.jpg" alt="Imagen" title="Imagen" style="margin: 0px 0px 15px 0px; opacity: 1;" data-sap-hpa-ceimo-image-id="1530130374125377" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> <strong style="font-family: Arial; font-size: 16px; margin: 0px 0px 15px 0px; display: block; width: 140px;">Soluci&oacute;n Multibeneficios </strong>
+<p style="font-family: Arial; font-size: 16px; margin: 0px 0px 45px 0px; display: inline-block; width: 140px;">Aclara, alisa, hidrata, revitaliza y fortalece la piel del rostro.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+<table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+  <tr>
+<td>
+<![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="1530130374125378" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+        </td>
+    </tr>
+</table>
+<![endif]--> <!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+            <tr>
+            <td>
+            <![endif]-->
+<table class="table_mobile section_prodcont2" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" height="30px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;" colspan="3"></td>
+</tr>
+<tr>
+<td width="255" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 255px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; padding-bottom: 45px;" class="column1">
+<p style="margin: 0 0 0px 30px; text-align: center; display: block;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="BannerInferior" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-id="201809062117046" data-sap-hpa-ceimo-link-alias="ImgComprarInferior" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/Nuevas/Top/C12/LBel/Concentre_Rostro/Concentre_acompanamiento.jpg" alt="Imagen" title="Imagen" style="margin: 0px; opacity: 1;" data-sap-hpa-ceimo-image-id="15300532253531158" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></a></p>
+</td>
+<td align="left" width="285" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 285px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: bottom; padding-bottom: 48px;" class="column2">
+<p style="font-family: Arial; font-size: 20px; margin: 0px 0px 15px 30px; width: 210px; line-height: 22px; display: inline-block;"><b>Concentr&eacute; Total <br />de L'Bel</b></p>
+<p style="font-family: Arial; font-size: 18px; margin: 0px 0px 15px 30px; display: inline-block; width: 210px;">Asegura pedidos&nbsp;</p>
+<table border="0" cellspacing="0" cellpadding="0" width="210px" style="width: 210px; background: #8c581a; margin: 0px 0px 0px 30px; border-radius: 5px;" height="45px">
+<tbody>
+<tr>
+<td height="45px" style="padding: 0px; height: 45px;">
+<p class="MsoNormal" align="center" style="text-align: center; padding: 0px; margin: 0px;"><span style="font-family: Arial, Helvetica, sans-serif; color: white;"> <a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Pedido" target="_blank" title="ENT&Eacute;RATE M&Aacute;S" style="color: #ffffff; text-decoration: none; width: 210px; display: block; padding: 15px 0 13px 0; font-size: 16px; font-weight: normal; line-height: 17px;" data-sap-hpa-ceimo-link-id="201809062117047" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Dynamic" data-sap-hpa-ceimo-link-pers="|%DA-_SAP_CT_CNT_YY1_F29C903AE668-LINKTOP%|" data-sap-hpa-ceimo-link-alias="BtnComprarInferior">ENT&Eacute;RATE M&Aacute;S</a> </span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15300532253531159" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table class="table_mobile" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; padding-top: 25px;">
+<h2 style="font-size: 18px; color: #000000; margin: 0; line-height: 25px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 50px; padding-right: 50px; font-weight: bold;">Mira todas las ofertas que tenemos para ti</h2>
+</td>
+</tr>
+<tr>
+<td align="center" width="100%" style="padding-bottom: 40px; vertical-align: top;"><center><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/Ofertas" target="_blank" title="Ir a Ofertas" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-id="201809062117048" data-sap-hpa-ceimo-link-alias="ImgOferta"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Call_To_Action/CTA.gif" alt="Ir a Oferta" title="Ir a Oferta" style="opacity: 1;" data-sap-hpa-ceimo-image-id="1532037381658748" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></a></center></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--> <!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td style="padding-top: 0px; display: block;"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/100Digital/3marcas/arrow.jpg" alt="" style="width: 100%;" data-sap-hpa-ceimo-image-id="15299735302683635" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--><!--[if (gte mso 9)|(IE)]>
+            <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+              <tr>
+            <td>
+            <![endif]-->
+<table class="table_mobile section_cont1" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background: white;">
+<tbody>
+<tr>
+<td align="center" height="30px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px; height: 30px;"></td>
+</tr>
+<tr>
+<td align="center" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; line-height: 24px;">
+<h2 style="font-size: 20px; color: #000000; margin: 0; line-height: 20px; margin-bottom: 30px; font-family: 'Arial', 'ArialMT', sans-serif; padding-left: 30px; padding-right: 30px; font-weight: bold; padding-top: 0px;">TUS HERRAMIENTAS DE NEGOCIO:</h2>
+</td>
+</tr>
+<tr>
+<td align="left" width="255px" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 255px; font-size: 18px; color: #000000; padding-top: 0px; vertical-align: top; padding-left: 30px; padding-bottom: 25px;" class="column">
+<ul style="margin: 0px; padding: 0px 0 0px 20px; width: 90%;">
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/HerramientasVenta/Comprar" target="_blank" title="Demostradores" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-id="201809062117049" data-sap-hpa-ceimo-link-alias="LinkDemostradores">Demostradores</a>&nbsp;para vender m&aacute;s esta campa&ntilde;a.</li>
+<li style="font-family: 'Arial', 'ArialMT', sans-serif; font-size: 16px; margin: 0px;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/MisCatalogosRevistas" target="_blank" title="Comparte cat&aacute;logos" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-id="2018090621170410" data-sap-hpa-ceimo-link-alias="LinkCatalogo">Comparte cat&aacute;logos</a> gratis, f&aacute;cil y r&aacute;pido.&nbsp;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+            </table>
+            <![endif]--></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--# END OF reusable block area [EK_Concentre(GT-SV-DO)] -->
+
+<!--# BEGINNING OF reusable block area [Footer_Mod3] - Note: Changes to this area are not observed during the upload. --><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="CO"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145040" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /> <b>Tu usuario:</b>&nbsp;&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - Documento de Identidad" type="button" value="Documento de Identidad" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_DOCUMENTOIDENTIDAD_MPS%|" data-sap-hpa-ceimo-attribute-id="1529965638177841" /> <br /><b>Tu contrase&ntilde;a*:</b> Tu n&uacute;mero de C&eacute;dula de Identidad <br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145041" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="EsikaFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Esika_Footer.png" border="0" alt="&Eacute;sika" title="&Eacute;sika" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.esika&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145042" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="CL"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145043" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /> <b>Tu usuario:</b>&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - Documento de Identidad" type="button" value="Documento de Identidad" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_DOCUMENTOIDENTIDAD_MPS%|" data-sap-hpa-ceimo-attribute-id="1529965638177841" /> <br /><b>Tu contrase&ntilde;a*:&nbsp;</b>Tu c&oacute;digo de consultora de 7 d&iacute;gitos (incluido el 0 inicial, si lo tuviera) <br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145044" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="EsikaFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Esika_Footer.png" border="0" alt="&Eacute;sika" title="&Eacute;sika" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.esika&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145045" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="PE"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145046" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /> <b>Tu usuario:</b>&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1530203729889989" /><br /><b>Tu contrase&ntilde;a*:&nbsp;</b>Tu n&uacute;mero de DNI<br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145047" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="EsikaFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Esika_Footer.png" border="0" alt="&Eacute;sika" title="&Eacute;sika" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.esika&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145048" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="BO"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145013" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /> <b>Tu usuario:</b>&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1530203729889989" /><br /><b>Tu contrase&ntilde;a*:&nbsp;</b>El n&uacute;mero de tu Carn&eacute; de Identidad, con las 3 letras de la extensi&oacute;n del lugar de emisi&oacute;n<br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145014" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="EsikaFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Esika_Footer.png" border="0" alt="&Eacute;sika" title="&Eacute;sika" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.esika&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145015" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="EC"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145016" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /><b>Tu usuario:</b>&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - Documento de Identidad" type="button" value="Documento de Identidad" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_DOCUMENTOIDENTIDAD_MPS%|" data-sap-hpa-ceimo-attribute-id="15302040510811146" /><br /><b>Tu contrase&ntilde;a*:&nbsp;</b>El n&uacute;mero de tu C&eacute;dula de <br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145017" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="EsikaFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Esika_Footer.png" border="0" alt="&Eacute;sika" title="&Eacute;sika" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.esika&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145018" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="GT"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145019" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /> <b>Tu usuario:</b>&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1530203729889989" /><br /><b>Tu contrase&ntilde;a*:&nbsp;</b>Los 4 &uacute;ltimos d&iacute;gitos de tu Documento de Identidad <br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145020" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="EsikaFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Esika_Footer.png" border="0" alt="&Eacute;sika" title="&Eacute;sika" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.esika&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145021" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="DO"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145022" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a> <br /> <b>Tu usuario:</b>&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1530203729889989" /><br /><b>Tu contrase&ntilde;a*:&nbsp;</b>Los 4 &uacute;ltimos d&iacute;gitos de tu C&eacute;dula de Identidad (sin guiones)&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145023" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="EsikaFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Esika_Footer.png" border="0" alt="&Eacute;sika" title="&Eacute;sika" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.esika&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145024" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="SV"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145025" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a> <br /> <b>Tu usuario:</b>&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1530203729889989" /><br /><b>Tu contrase&ntilde;a*:&nbsp;</b>Los 4 &uacute;ltimos d&iacute;gitos de tu documento de identidad <br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145026" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="EsikaFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Esika_Footer.png" border="0" alt="&Eacute;sika" title="&Eacute;sika" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.esika&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145027" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="CR"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145037" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a> <br /> <b>Tu usuario:</b>&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1530202603745745" /><br /><b>Tu contrase&ntilde;a*:</b> Los &uacute;ltimos 4 d&iacute;gitos de documento de identidad <br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145038" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="LbelFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/LBel_Footer.png" border="0" alt="L'Bel" title="L'Bel" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.lbel&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145039" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp_lbel.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="MX"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145034" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /> <b>Tu usuario:</b>&nbsp;&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1530201696986707" /><br /><b>Tu contrase&ntilde;a*:</b> Los &uacute;ltimos 4 d&iacute;gitos de tu c&oacute;digo de consultora. <br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145035" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="LbelFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/LBel_Footer.png" border="0" alt="L'Bel" title="L'Bel" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.lbel&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145036" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp_lbel.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="PA"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145031" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /> <b>Tu usuario:</b>&nbsp;&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1530201218353633" /><br /><b>Tu contrase&ntilde;a*:</b> Los &uacute;ltimos 4 d&iacute;gitos de documento de identidad <br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145032" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="LbelFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/LBel_Footer.png" border="0" alt="L'Bel" title="L'Bel" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.lbel&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145033" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp_lbel.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="PR"
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145031" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /> <b>Tu usuario:</b>&nbsp;&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1530201218353633" /><br /><b>Tu contrase&ntilde;a*:</b> Los 4 &uacute;ltimos d&iacute;gitos de tu Seguro Social (sin guiones) <br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145032" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="LbelFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/LBel_Footer.png" border="0" alt="L'Bel" title="L'Bel" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.lbel&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145033" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp_lbel.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition=""
+data-sap-hpa-ceimo-blockid="15299721914163464"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="964">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: auto; -ms-text-size-adjust: auto;" class="wrapper">
+<table style="width: 100%; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!--[if (gte mso 9)|(IE)]>
+ <table width="600" align="center" >
+ <tr> <td>
+ <![endif]-->
+<table style="display: inline-block; width: 100%; max-width: 600px; vertical-align: top; border-spacing: 0px; font-family: sans-serif; background: #ebe8e8;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center" valign="top" style="font-size: 0; padding-top: 0;">
+<div style="display: inline-block; max-width: 100%; min-width: 100px; vertical-align: top; width: 100%;"><!--[if (gte mso 9)|(IE)]>
+ <table width="540" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table class="footer" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+<tbody>
+<tr>
+<td align="center" height="auto" style="font-family: Arial, Helvetica, Arial, sans-serif; font-weight: 400; width: 100%; line-height: 0;" colspan="2"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Footer_negro.jpg" alt="icono" width="100%" height="40" style="height: 40px;" data-sap-hpa-ceimo-image-id="1529965638177836" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+</tr>
+<tr style="width: 100%; display: inline-block; background: #231f20;">
+<td align="left" style="background: #231f20; width: 16%; vertical-align: top; text-align: left; float: left; padding: 15px 0px 20px 30px;" class="column1"><img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Notificaciones.jpg" alt="Belcorp" title="Belcorp" style="margin-left: 0px; margin-top: 5px; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177837" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /></td>
+<td align="left" style="font-family: Arial, Helvetica, Arial, sans-serif; background: #231f20; width: 78%; float: left;" class="column2">
+<p class="parrafoFooter" style="font-size: 15px; line-height: 18px; font-family: Arial, Helvetica, sans-serif; padding: 0px; margin: 10px 0px 25px 0; width: 100%; color: #fff; display: inline-block;">Tenemos mucho m&aacute;s para ti en <a href="https://www.somosbelcorp.com" style="color: #ffffff;" data-sap-hpa-ceimo-link-id="2018090418145028" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X">somosbelcorp.com</a><br /> <b>Tu usuario:</b>&nbsp;<input class="sapHpaCeiSmoManagePlaceholder" title="Contact - C&oacute;digo Ebelista" type="button" value="C&oacute;digo Ebelista" data-sap-hpa-ceimo-attrib-pers="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|" data-sap-hpa-ceimo-attribute-id="1536084996995824" /><br /><b>Tu contrase&ntilde;a*:</b> Los &uacute;ltimos 4 d&iacute;gitos de documento de identidad<br /><span style="font-size: 13px; margin-top: 5px; display: block;">*Si no lo cambiaste.&nbsp;&nbsp;</span></p>
+</td>
+</tr>
+<tr>
+<td height="72px" width="600px" style="padding: 0px 0; background-image: url('https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg'); background-position: center 0;" colspan="2"><!--[if gte mso 9]>
+  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="true" style="width:600px;height:70px;">
+    <v:fill type="tile" src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Back_footer_multimarca_esika.jpg" color="#f2f0f5" ></v:fill>
+    <v:textbox inset="0,0,0,0">
+  <![endif]--><!--[if (gte mso 9)|(IE)]>
+ <table width="598" align="center" border="0" cellpadding="0" cellspacing="0" >
+ <tr>
+ <td>
+ <![endif]-->
+<table style="width: 100%; padding: 0px; display: block;" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td height="70px" valign="bottom" style="padding: 0px; width: 100%; text-align: left; height: 70px;" class="inner contents"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/" target="_blank" title="Footer" style="display: block; border: none;" data-sap-hpa-ceimo-link-id="2018090418145029" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="EsikaFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/Esika_Footer.png" border="0" alt="&Eacute;sika" title="&Eacute;sika" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177838" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+<td align="right" height="70px" style="text-align: right; height: 70px;"><a rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=biz.belcorp.consultoras.esika&amp;hl=es" target="_blank" title="Descargar_App" style="display: block;" data-sap-hpa-ceimo-link-id="2018090418145030" data-sap-hpa-ceimo-link-outboundid="X" data-sap-hpa-ceimo-link-utm="X" data-sap-hpa-ceimo-link-trackable="X" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-alias="DescargaAppFooter"> <img src="https://s3.amazonaws.com/somosbelcorp/Virtual_Coach/HM/Estructura/Footer/DescargarApp.png" border="0" alt="Descargar_App" title="Descargar_App" style="border: none; height: auto; opacity: 1;" data-sap-hpa-ceimo-image-id="1529965638177839" data-sap-hpa-ceimo-image="SMOImage" data-sap-hpa-ceimo-image-type="Static" /> </a></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--> <!--[if gte mso 9]>
+    </v:textbox>
+  </v:rect>
+  <![endif]--></td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+ </td>
+ </tr>
+ </table>
+ <![endif]--></td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--# END OF reusable block area [Footer_Mod3] -->
+
+<!--# BEGINNING OF reusable block area [Cancelar Suscripcion] - Note: Changes to this area are not observed during the upload. --><!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="CO"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=CO&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075814" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="CL"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=CL&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075815" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="BO"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=BO&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075816" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="PE"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=PE&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075817" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="EC"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=EC&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075818" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="DO"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=DO&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075819" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="GT"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=GT&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075820" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="SV"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=SV&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075821" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="CR"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https:///www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=CR&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075822" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="PA"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https:///www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=PA&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075823" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition="MX"
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https:///www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=MX&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075824" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--[if mso]><table border="0" cellpadding="0" cellspacing="0" align="left" style="mso-table-lspace:0pt;  mso-table-rspace:0pt; border-collapse: collapse; width: 100%"><tr><td style="width: 100%;"><![endif]-->
+<div style="float: left; width: 100%" class="sapMktBlock"
+data-sap-hpa-ceimo-block-type="TEXT"
+data-sap-hpa-ceimo-condition=""
+data-sap-hpa-ceimo-blockid="15299714630822867"
+data-sap-hpa-ceimo-blockid-parent=""
+data-sap-hpa-ceimo-block-editable=""
+data-sap-hpa-ceimo-refmessageid="289">
+<center>
+<table>
+<tbody>
+<tr>
+<td height="54px" style="height: 54px;">
+<p style="text-align: center;"><a rel="noopener noreferrer" href="https://www.somosbelcorp.com/AsesoraOnline/CancelarSuscripcion?pais=CO&amp;" target="_blank" title="Cancelar Suscripci&oacute;n" style="color: #c2c2c2; text-decoration: none; font-size: 14px;" data-sap-hpa-ceimo-link-type="Static" data-sap-hpa-ceimo-link-outboundid=" " data-sap-hpa-ceimo-link-utm=" " data-sap-hpa-ceimo-link-trackable=" " data-sap-hpa-ceimo-link-id="2018041218075814" data-sap-hpa-ceimo-link-paramname="codconsultora" data-sap-hpa-ceimo-link-paramvalue="|%BO-CUAN_INTERACTION_CONTACT-YY1_CODIGOEBELISTA_MPS%|">Cancelar Suscripci&oacute;n</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+</div><!--[if mso]></td></tr></table><![endif]-->
+<!--# END OF reusable block area [Cancelar Suscripcion] -->
+</body></html>
